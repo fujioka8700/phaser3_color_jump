@@ -2,5 +2,5 @@ module.exports = {
     env: {
         es6: true,
     },
-    extends: ['prettier'],
+    extends: ['some-other-config-you-use', 'prettier'],
 };
