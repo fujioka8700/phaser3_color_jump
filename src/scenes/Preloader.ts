@@ -1,5 +1,7 @@
 import { Scene } from 'phaser';
 
+import gameOptions from '../game-oprions';
+
 export class Preloader extends Scene {
     constructor() {
         super('Preloader');
@@ -29,6 +31,11 @@ export class Preloader extends Scene {
         this.load.image('logo', 'logo.png');
 
         this.load.image('emptytile', 'sprites/emptytile.png');
+
+        this.load.spritesheet('tiles', 'sprites/tiles.png', {
+            frameWidth: gameOptions.tileSize,
+            frameHeight: gameOptions.tileSize,
+        });
     }
 
     create() {
