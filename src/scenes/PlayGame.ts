@@ -29,16 +29,19 @@ export class PlayGame extends Scene {
         }
 
         if (emptyTiles.length > 0) {
-            const chosenTile = Phaser.Utils.Array.GetRandom(emptyTiles); // 配列からランダムな要素を返します。
+            const { col, row } = Phaser.Utils.Array.GetRandom(emptyTiles); // 配列からランダムな要素を返します。
 
-            this.boardArray[chosenTile.row][chosenTile.col].tileValue = 1;
-            this.boardArray[chosenTile.row][chosenTile.col].tileSprite.visible =
-                true;
+            this.boardArray[row][col].tileValue = 1;
+            this.boardArray[row][col].tileSprite.visible = true; // ゲームオブジェクトの表示状態
+            this.boardArray[row][col].tileSprite.setFrame(0); // このゲームオブジェクトが、レンダリングに使用するフレームを設定します。
+            this.boardArray[row][col].tileSprite.alpha = 0; // 透過度
 
-            //このゲームオブジェクトが、レンダリングに使用するフレームを設定します。
-            this.boardArray[chosenTile.row][chosenTile.col].tileSprite.setFrame(
-                0,
-            );
+            // Tweenを作成し、Tween設定オブジェクトを渡すことによって、このTween Managerに追加します。
+            this.tweens.add({
+                alpha: 1,
+                duration: gameOptions.tweenSpeed,
+                targets: [this.boardArray[row][col].tileSprite],
+            });
         }
     }
 
@@ -52,7 +55,7 @@ export class PlayGame extends Scene {
                 const tilePosition = this.getTilePosition(x, y);
                 this.add.image(tilePosition.x, tilePosition.y, 'emptytile');
 
-                const tile = this.add.sprite(
+                let tile = this.add.sprite(
                     tilePosition.x,
                     tilePosition.y,
                     'tiles',

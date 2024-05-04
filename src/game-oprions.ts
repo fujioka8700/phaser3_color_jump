@@ -5,4 +5,5 @@ export default {
     },
     tileSize: 200,
     tileSpacing: 20,
+    tweenSpeed: 2000,
 };
