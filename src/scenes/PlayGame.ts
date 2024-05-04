@@ -39,7 +39,12 @@ export class PlayGame extends Scene {
             // Tweenを作成し、Tween設定オブジェクトを渡すことによって、このTween Managerに追加します。
             this.tweens.add({
                 alpha: 1,
+                callbackScope: this,
                 duration: gameOptions.tweenSpeed,
+                onComplete: function () {
+                    console.log('tween completed');
+                    this.canMove = true;
+                },
                 targets: [this.boardArray[row][col].tileSprite],
             });
         }
