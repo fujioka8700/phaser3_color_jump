@@ -1,6 +1,8 @@
 import { Scene } from 'phaser';
 
-import gameOptions from '../game-oprions';
+import gameOptions, { constants } from '../game-options';
+
+const { LEFT, RIGHT, UP, DOWN } = constants;
 
 export class PlayGame extends Scene {
     boardArray: Array<
@@ -9,6 +11,7 @@ export class PlayGame extends Scene {
             tileSprite: Phaser.GameObjects.Sprite;
         }>
     >;
+    canMove: boolean;
 
     constructor() {
         super('PlayGame');
@@ -52,6 +55,7 @@ export class PlayGame extends Scene {
 
     create() {
         this.boardArray = Array();
+        this.canMove = false;
 
         for (let y = 0; y < gameOptions.boardSize.rows; y++) {
             this.boardArray[y] = Array();
@@ -95,9 +99,28 @@ export class PlayGame extends Scene {
     }
 
     handleKey(e: KeyboardEvent) {
-        const keyPressed = e.code;
-
-        console.log(`You pressed key ${keyPressed}`);
+        if (this.canMove) {
+            switch (e.code) {
+                case 'KeyA':
+                case 'ArrowLeft':
+                    this.makeMove(LEFT);
+                    break;
+                case 'KeyD':
+                case 'ArrowRight':
+                    this.makeMove(RIGHT);
+                    break;
+                case 'KeyW':
+                case 'ArrowUp':
+                    this.makeMove(UP);
+                    break;
+                case 'KeyS':
+                case 'ArrowDown':
+                    this.makeMove(DOWN);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     handleSwipe(e: Phaser.Input.Pointer) {
@@ -107,5 +130,9 @@ export class PlayGame extends Scene {
         console.log(`Movement time: ${swipeTime}ms`);
         console.log(`Horizontal distance: ${swipe.x} pixels`);
         console.log(`Vertical distance: ${swipe.y} pixels`);
+    }
+
+    makeMove(d: number) {
+        console.log('about to move');
     }
 }

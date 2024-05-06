@@ -1,6 +1,6 @@
 import { Scene } from 'phaser';
 
-import gameOptions from '../game-oprions';
+import gameOptions from '../game-options';
 
 export class Preloader extends Scene {
     constructor() {
