@@ -77,6 +77,9 @@ export class PlayGame extends Scene {
 
         this.addTile();
         this.addTile();
+
+        this.input.keyboard?.on('keydown', this.handleKey, this);
+        this.input.on('pointerup', this.handleSwipe, this);
     }
 
     getTilePosition(col: number, row: number) {
@@ -89,5 +92,20 @@ export class PlayGame extends Scene {
 
         // x, y 座標の位置を定義する
         return new Phaser.Geom.Point(posX, posY);
+    }
+
+    handleKey(e: KeyboardEvent) {
+        const keyPressed = e.code;
+
+        console.log(`You pressed key ${keyPressed}`);
+    }
+
+    handleSwipe(e: Phaser.Input.Pointer) {
+        const swipeTime = e.upTime - e.downTime;
+        const swipe = new Phaser.Geom.Point(e.upX - e.downX, e.upY - e.downY);
+
+        console.log(`Movement time: ${swipeTime}ms`);
+        console.log(`Horizontal distance: ${swipe.x} pixels`);
+        console.log(`Vertical distance: ${swipe.y} pixels`);
     }
 }
